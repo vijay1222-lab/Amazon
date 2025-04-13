@@ -123,10 +123,4 @@
       </plugins>
     </pluginManagement>
   </build>
-    <distributionManagement>
-    <repository>
-      <id>artifactory-snapshots</id>
-      <url>http://192.168.115.128:8081/artifactory/libs-snapshot-local</url>
-    </repository>
-  </distributionManagement>
-</project>
+ </project>
