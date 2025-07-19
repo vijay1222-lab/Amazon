@@ -14,10 +14,6 @@
   </modules>
 
   <name>Amazon</name>
-
-  
-
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -34,6 +30,7 @@
       <scope>test</scope>
     </dependency>
 
+
 <!-- https://mvnrepository.com/artifact/org.testng/testng -->
 <dependency>
     <groupId>org.testng</groupId>
@@ -41,6 +38,8 @@
     <version>7.1.0</version>
     <scope>test</scope>
 </dependency>
+
+
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
     <dependency>
       <groupId>org.springframework</groupId>
