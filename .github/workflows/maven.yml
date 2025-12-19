@@ -1,16 +1,20 @@
-name: Amazon Java CI
+name: Amazon Build & Docker Image
 
 on:
-  workflow_dispatch:   
+  workflow_dispatch:   # manual run only
+  push:
+    branches: [ "master" ]
 
 jobs:
-  build:
+  build-and-docker:
     runs-on: ubuntu-latest
 
     steps:
+    # 1️⃣ Checkout code
     - name: Checkout source
       uses: actions/checkout@v4
 
+    # 2️⃣ Setup Java 17
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
@@ -18,17 +22,18 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    # 1️⃣ Compile + Run Tests + Package
-    - name: Build, test and package Amazon project
+    # 3️⃣ Build Amazon project
+    - name: Build Amazon project with Maven
       working-directory: Amazon
-      run: mvn -B clean verify
+      run: mvn -B clean package
 
-    # 2️⃣ Upload JAR/WAR artifacts
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: amazon-artifacts
-        path: |
-          Amazon/Amazon-Core/target/*.jar
-          Amazon/Amazon-Web/target/*.war
-          Amazon/Amazon-Web/target/*.jar
+    # 4️⃣ Build Docker image (Amazon-Web)
+    - name: Build Docker image
+      run: |
+        docker build \
+          -t amazon-web:latest \
+          Amazon/Amazon-Web
+
+    # 5️⃣ Verify Docker image
+    - name: List Docker images
+      run: docker images
